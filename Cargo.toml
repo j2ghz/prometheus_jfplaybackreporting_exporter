@@ -3,7 +3,14 @@ name = "prometheus_jfplaybackreporting_exporter"
 version = "0.1.0"
 authors = ["J2ghz <j2.00ghz@gmail.com>"]
 edition = "2018"
+exclude = ['samples/*']
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[dev-dependencies]
+proptest = "0.10.0"
+pretty_assertions = "0.6.1"
+
 
 [dependencies]
+prometheus_exporter_base = "0.30.4"
+tokio = { version = "0.2.21", features = ["full"] }
+csv = '1.1.3'
