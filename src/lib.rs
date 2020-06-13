@@ -1,14 +1,6 @@
-use csv::Error;
-use prometheus_exporter_base::{render_prometheus, MetricType, PrometheusMetric};
+use chrono::prelude::*;
+use prometheus_exporter_base::{MetricType, PrometheusMetric};
 use std::path::Path;
-
-fn parse<T: std::str::FromStr>(
-    string: &str,
-) -> std::result::Result<T, <T as std::str::FromStr>::Err> {
-    let parsed = string.parse::<T>();
-    assert!(parsed.is_ok(), "Could not parse {}", string);
-    parsed
-}
 
 pub fn read_file(path: &Path) -> csv::StringRecordsIntoIter<std::fs::File> {
     csv::ReaderBuilder::new()
@@ -23,10 +15,19 @@ pub fn render(records: csv::StringRecordsIntoIter<std::fs::File>) -> std::string
     let pc = PrometheusMetric::new("watch_time", MetricType::Counter, "Watch time in seconds");
     let records = records.filter_map(|r| match r {
         Ok(record) => Some(record),
-        Err(e) => None,
+        Err(e) => {
+            eprintln!("Invalid record: {}", e);
+            None
+        }
     });
     let mut s = pc.render_header();
     for r in records {
+        let timestamp_str = r.get(0).unwrap();
+        let timestamp = NaiveDateTime::parse_from_str(timestamp_str, "%F %T%.f").unwrap();
+        let timestamp_with_tz = Local::now()
+            .offset()
+            .from_local_datetime(&timestamp)
+            .unwrap();
         s.push_str(
             &pc.render_sample(
                 Some(&[
@@ -43,6 +44,7 @@ pub fn render(records: csv::StringRecordsIntoIter<std::fs::File>) -> std::string
                     .unwrap_or_else(|| panic!("{:?}", r))
                     .parse::<u32>()
                     .unwrap(),
+                Some(timestamp_with_tz.timestamp_millis()),
             ),
         );
     }
