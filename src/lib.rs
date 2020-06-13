@@ -31,13 +31,13 @@ pub fn render(records: csv::StringRecordsIntoIter<std::fs::File>) -> std::string
             &pc.render_sample(
                 Some(&[
                     ("timestamp", r.get(0).unwrap()),
-                    ("id1", r.get(1).unwrap()),
-                    ("id2", r.get(2).unwrap()),
-                    ("mediaType", r.get(3).unwrap()),
-                    ("name", r.get(4).unwrap()),
+                    ("userId", r.get(1).unwrap()),
+                    ("itemId", r.get(2).unwrap()),
+                    ("itemType", r.get(3).unwrap()),
+                    ("itemName", r.get(4).unwrap()),
                     ("playbackMethod", r.get(5).unwrap()),
-                    ("app", r.get(6).unwrap()),
-                    ("device", r.get(7).unwrap()),
+                    ("clientName", r.get(6).unwrap()),
+                    ("deviceName", r.get(7).unwrap()),
                 ]),
                 r.get(8)
                     .unwrap_or_else(|| panic!("{:?}", r))
