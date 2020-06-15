@@ -12,7 +12,7 @@ pub fn read_file(path: &Path) -> csv::StringRecordsIntoIter<std::fs::File> {
 }
 
 pub fn render(records: csv::StringRecordsIntoIter<std::fs::File>) -> std::string::String {
-    let pc = PrometheusMetric::new("watch_time", MetricType::Counter, "Watch time in seconds");
+    let pc = PrometheusMetric::new("jellyfin_watchtime", MetricType::Counter, "Watch time in seconds");
     let records = records.filter_map(|r| match r {
         Ok(record) => Some(record),
         Err(e) => {
