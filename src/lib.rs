@@ -12,7 +12,11 @@ pub fn read_file(path: &Path) -> csv::StringRecordsIntoIter<std::fs::File> {
 }
 
 pub fn render(records: csv::StringRecordsIntoIter<std::fs::File>) -> std::string::String {
-    let pc = PrometheusMetric::new("jellyfin_watchtime", MetricType::Counter, "Watch time in seconds");
+    let pc = PrometheusMetric::new(
+        "jellyfin_watchtime",
+        MetricType::Counter,
+        "Watch time in seconds",
+    );
     let records = records.filter_map(|r| match r {
         Ok(record) => Some(record),
         Err(e) => {
@@ -61,7 +65,7 @@ pub fn sample() -> std::string::String {
 #[cfg(test)]
 mod tests {
     use crate::*;
-    use pretty_assertions::{assert_eq, assert_ne};
+    use pretty_assertions::assert_ne;
 
     #[test]
     fn complete() {
@@ -69,6 +73,6 @@ mod tests {
             "samples/PlaybackReportingBackup-20200607-021556.tsv",
         ));
         let result = render(reader);
-        assert_eq!("", result);
+        assert_ne!("", result);
     }
 }

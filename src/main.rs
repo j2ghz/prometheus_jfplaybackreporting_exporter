@@ -1,9 +1,8 @@
-use futures::stream::{self, StreamExt};
+use futures::stream::StreamExt;
 use prometheus_exporter_base::render_prometheus;
 use prometheus_jfplaybackreporting_exporter::{read_file, render};
 use std::{env, path::Path};
 use tokio::fs::read_dir;
-use tokio::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -11,10 +10,7 @@ async fn main() {
         ([0, 0, 0, 0], 32221).into(),
         {},
         |_request, _options| async move {
-            let path_arg = env::args()
-                .into_iter()
-                .nth(1)
-                .expect("Supply path to a directory");
+            let path_arg = env::args().nth(1).expect("Supply path to a directory");
             let path = Path::new(&path_arg);
             let dir = read_dir(path).await.expect("Couldn't read directory");
             let (file, _) = dir

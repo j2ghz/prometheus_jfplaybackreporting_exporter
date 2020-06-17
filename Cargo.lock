@@ -828,8 +828,9 @@ dependencies = [
 
 [[package]]
 name = "prometheus_exporter_base"
-version = "0.30.4"
-source = "git+https://github.com/j2ghz/prometheus_exporter_base#ebad233be09a7be44095023d7c0721daf2078662"
+version = "0.31.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4d4cf32926a711d1109383887fa93b22f087aea854696c637d2826c7ff84d0be"
 dependencies = [
  "clap",
  "env_logger",
