@@ -10,7 +10,7 @@ async fn main() {
         ([0, 0, 0, 0], 32221).into(),
         {},
         |_request, _options| async move {
-            let path_arg = env::args().nth(1).expect("Supply path to a directory");
+            let path_arg = env::args().nth(1).expect("Expected a single parameter with path to the directory with the exported files");
             let path = Path::new(&path_arg);
             let dir = read_dir(path).await.expect("Couldn't read directory");
             let (file, _) = dir
