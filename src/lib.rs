@@ -68,6 +68,7 @@ mod tests {
     use pretty_assertions::assert_ne;
 
     #[test]
+    #[ignore("Local only")]
     fn complete() {
         let reader = read_file(Path::new(
             "samples/PlaybackReportingBackup-20200607-021556.tsv",
