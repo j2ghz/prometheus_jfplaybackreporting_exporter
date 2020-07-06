@@ -13,5 +13,5 @@ pretty_assertions = "0.6.1"
 prometheus_exporter_base = "0.31.0"
 tokio = { version = "0.2.21", features = ["full"] }
 csv = '1.1.3'
-chrono = '0.4.12'
+chrono = '0.4.13'
 futures = "0.3.5"
